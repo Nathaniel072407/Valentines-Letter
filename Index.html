@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Valentine's Day Surprise</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #fbeef4;
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            color: #5f1239;
+            position: relative;
+        }
+
+        .container {
+            position: relative;
+            text-align: center;
+            opacity: 0;
+            animation: fadeIn 2s ease-out forwards;
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            max-width: 90%;
+            margin: auto;
+        }
+
+        @keyframes fadeIn {
+            0% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+
+        .message {
+            font-size: 3rem;
+            font-weight: bold;
+            margin-top: 30px;
+            opacity: 0;
+            animation: textAppear 4s ease-out forwards;
+            letter-spacing: 2px;
+        }
+
+        @keyframes textAppear {
+            0% {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .letter {
+            display: inline-block;
+            opacity: 0;
+            animation: letterAppear 1s ease-in-out forwards;
+        }
+
+        @keyframes letterAppear {
+            0% {
+                opacity: 0;
+            }
+            100% {
+                opacity: 1;
+            }
+        }
+
+        .surprise-message {
+            font-size: 1.8rem;
+            color: #d6336c;
+            margin-top: 50px;
+            opacity: 0;
+            animation: fadeInMessage 2s ease-in forwards;
+        }
+
+        @keyframes fadeInMessage {
+            0% {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Glowing Plants Effect */
+        .glowing-plants {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 150px;
+            z-index: -2;
+            background-image: url('https://www.w3schools.com/w3images/trees.jpg'); /* Image for the glowing plants */
+            background-size: cover;
+            background-position: center;
+            filter: blur(4px); /* Applying a slight blur to the background */
+            animation: glowEffect 4s ease-in-out infinite;
+        }
+
+        .plant {
+            position: absolute;
+            bottom: 0;
+            width: 100px;
+            height: 100px;
+            background-color: #228B22;
+            border-radius: 50%;
+            opacity: 0;
+            animation: plantGlow 6s ease-in-out infinite;
+        }
+
+        .plant:nth-child(1) {
+            left: 10%;
+            animation-delay: 0s;
+        }
+
+        .plant:nth-child(2) {
+            left: 30%;
+            animation-delay: 1s;
+        }
+
+        .plant:nth-child(3) {
+            left: 50%;
+            animation-delay: 2s;
+        }
+
+        .plant:nth-child(4) {
+            left: 70%;
+            animation-delay: 3s;
+        }
+
+        .plant:nth-child(5) {
+            left: 90%;
+            animation-delay: 4s;
+        }
+
+        @keyframes glowEffect {
+            0% {
+                background-color: rgba(255, 255, 255, 0.3);
+            }
+            50% {
+                background-color: rgba(0, 255, 0, 0.6);
+            }
+            100% {
+                background-color: rgba(255, 255, 255, 0.3);
+            }
+        }
+
+        @keyframes plantGlow {
+            0% {
+                opacity: 0;
+                transform: scale(0.5);
+            }
+            50% {
+                opacity: 1;
+                transform: scale(1.2);
+            }
+            100% {
+                opacity: 0;
+                transform: scale(0.5);
+            }
+        }
+
+        /* Background effect */
+        .background {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 100vw;
+            height: 100vh;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.5), rgba(255, 182, 193, 0.8));
+            z-index: -1;
+            animation: glowEffect 4s ease-in-out infinite;
+        }
+
+        /* Letter Card Style */
+        .letter-card {
+            background-color: #fff1f3;
+            border: 1px solid #f2b0b6;
+            padding: 20px;
+            display: inline-block;
+            border-radius: 10px;
+            margin-top: 40px;
+            max-width: 400px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            width: 100%;
+        }
+
+        .letter-card:hover {
+            transform: scale(1.05);
+        }
+
+        .letter-card .card-message {
+            font-size: 1.6rem;
+            color: #d6336c;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .reveal-message {
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+        }
+
+        .reveal-message.open {
+            opacity: 1;
+        }
+
+        /* Glowing Border Indicator */
+        .letter-card-indicator {
+            position: relative;
+            padding: 10px;
+            border: 3px solid transparent;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(255, 105, 180, 0.8);
+            animation: glowingBorder 1.5s infinite ease-in-out;
+        }
+
+        @keyframes glowingBorder {
+            0% {
+                border-color: transparent;
+                box-shadow: 0 0 10px rgba(255, 105, 180, 0.8);
+            }
+            50% {
+                border-color: #ff69b4;
+                box-shadow: 0 0 25px rgba(255, 105, 180, 0.8);
+            }
+            100% {
+                border-color: transparent;
+                box-shadow: 0 0 10px rgba(255, 105, 180, 0.8);
+            }
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .message {
+                font-size: 2.5rem;
+            }
+
+            .letter-card {
+                max-width: 90%;
+            }
+
+            .surprise-message {
+                font-size: 1.5rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .message {
+                font-size: 2rem;
+            }
+
+            .letter-card {
+                max-width: 95%;
+            }
+
+            .surprise-message {
+                font-size: 1.3rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="background"></div>
+
+<!-- Glowing plants with background -->
+<div class="glowing-plants">
+    <div class="plant"></div>
+    <div class="plant"></div>
+    <div class="plant"></div>
+    <div class="plant"></div>
+    <div class="plant"></div>
+</div>
+
+<div class="container">
+    <!-- Message with Letters Transition -->
+    <div class="message">
+        <span class="letter" style="animation-delay: 0s;">H</span>
+        <span class="letter" style="animation-delay: 0.2s;">a</span>
+        <span class="letter" style="animation-delay: 0.4s;">p</span>
+        <span class="letter" style="animation-delay: 0.6s;">p</span>
+        <span class="letter" style="animation-delay: 0.8s;">y</span>
+        <span class="letter" style="animation-delay: 1s;"> </span>
+        <span class="letter" style="animation-delay: 1.2s;">V</span>
+        <span class="letter" style="animation-delay: 1.4s;">a</span>
+        <span class="letter" style="animation-delay: 1.6s;">l</span>
+        <span class="letter" style="animation-delay: 1.8s;">e</span>
+        <span class="letter" style="animation-delay: 2s;">n</span>
+        <span class="letter" style="animation-delay: 2.2s;">t</span>
+        <span class="letter" style="animation-delay: 2.4s;">i</span>
+        <span class="letter" style="animation-delay: 2.6s;">n</span>
+        <span class="letter" style="animation-delay: 2.8s;">e</span>
+        <span class="letter" style="animation-delay: 3s;">'s</span>
+        <span class="letter" style="animation-delay: 3.2s;"> </span>
+        <span class="letter" style="animation-delay: 3.4s;">D</span>
+        <span class="letter" style="animation-delay: 3.6s;">a</span>
+        <span class="letter" style="animation-delay: 3.8s;">y</span>
+    </div>
+
+    <!-- Letter Card with Indicator -->
+    <div class="letter-card letter-card-indicator" onclick="revealCard()">
+        <div class="card-message">
+            What if?
+        </div>
+        <div class="reveal-message">
+            I like you,💖 I'm not just saying it because you have a crush on Vaughn. But yeah alam kung almost 2 Weeks palang tayo nag u-usap AHAHAHAH, pero parang comfortable ako sayo like alam mo yun parang ang gaan mo kausap kaya iwan koba bigla ako naka ramdam ng ganto HAHAHAHAHA, but dipa naman kita ganoon ka kilala so di ko naman ini-expect ang sagot mo AHHAHAHAHA CORNI NI NAT'Z, so ayon may chance kaya si me sayo?
+        </div>
+    </div>
+
+    <!-- Surprise Message -->
+    <div class="surprise-message">Sana after nito we're friend parin! 💖</div>
+</div>
+
+<script>
+    window.onload = function() {
+        setTimeout(function() {
+            document.querySelector('.glowing-plants').style.opacity = 1;
+        }, 500);
+    };
+
+    function revealCard() {
+        const revealMessage = document.querySelector('.reveal-message');
+        revealMessage.classList.add('open');
+    }
+</script>
+
+</body>
+</html>
